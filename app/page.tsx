@@ -38,6 +38,16 @@ export default function Home() {
         alert("保存しました");
     }
 
+    async function deliver() {
+        const res = await fetch("/api/deliver", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ feedback }),
+        });
+        if (res.ok) alert("メールを送りました");
+        else alert("メール送信に失敗しました（無料枠では自分の登録メール宛のみ送れます）");
+    }
+
     return (
         <main style={{ padding: 24, maxWidth: 640 }}>
             <h1 className="p-6 text-4xl font-bold text-white text-center">AIロープレコーチ</h1>
@@ -85,6 +95,7 @@ export default function Home() {
                         className="w-full rounded-lg border border-gray-300 p-3 focus:border-blue-500 focus:outline-none"
                     >{feedback}</p>
                     <button onClick={save}>💾 保存する</button>
+                    <button onClick={deliver}>✉ メールで受け取る</button>
                 </>
             )}
         </main>
